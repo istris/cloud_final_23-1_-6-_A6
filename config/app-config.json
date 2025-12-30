@@ -1,0 +1,24 @@
+{
+    "app": {
+        "name": "Docker镜像构建实验项目",
+        "version": "2.0.0",
+        "description": "用于演示Docker镜像构建和优化的实验项目",
+        "author": "课程作业小组"
+    },
+    "server": {
+        "host": "0.0.0.0",
+        "port": 8080,
+        "debug": false,
+        "workers": 2
+    },
+    "logging": {
+        "level": "INFO",
+        "path": "/app/logs",
+        "filename": "app.log"
+    },
+    "features": {
+        "health_check": true,
+        "metrics": true,
+        "environment_variables": true
+    }
+}

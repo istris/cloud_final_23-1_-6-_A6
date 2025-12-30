@@ -1,0 +1,57 @@
+# 第一阶段：构建阶段
+FROM alpine:3.16 as builder
+
+# 安装Python和构建工具
+RUN apk add --no-cache python3 py3-pip
+
+WORKDIR /app
+
+# 复制依赖文件
+COPY src/requirements.txt .
+
+# 创建虚拟环境并安装依赖
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# 第二阶段：运行阶段
+FROM alpine:3.16
+
+# 安装Python3运行时和curl（用于健康检查）
+RUN apk add --no-cache python3 curl
+
+# 设置非root用户
+RUN addgroup -S appuser && adduser -S appuser -G appuser
+
+WORKDIR /app
+
+# 从构建阶段复制虚拟环境
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# 复制应用代码
+COPY src/app.py .
+
+# 设置环境变量
+ENV APP_NAME="Optimized Docker App"
+ENV APP_VERSION="2.0"
+ENV PORT=8080
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# 更改文件权限
+RUN chown -R appuser:appuser /app
+
+# 切换到非root用户
+USER appuser
+
+# 暴露端口
+EXPOSE 8080
+
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8080/health || exit 1
+
+# 运行应用（不使用gunicorn，简化）
+CMD ["python3", "app.py"]

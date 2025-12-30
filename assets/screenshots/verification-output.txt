@@ -1,0 +1,76 @@
+================================================
+    Docker镜像构建实验 - 最终验证报告
+================================================
+验证时间: 2025年 12月 29日 星期一 23:21:52 PST
+
+1. 系统环境信息:
+   操作系统: Ubuntu 19.04
+   内核版本: 5.0.0-38-generic
+   Docker版本: 18.09.7
+
+2. 镜像构建结果:
+   基础镜像: myapp:basic-v1.0
+   优化镜像: myapp:optimized-v2.0
+
+TAG                 SIZE                CREATED AT
+optimized-v2.0      75.8MB              2025-12-29 22:30:31 -0800 PST
+basic-v1.0          85.1MB              2025-12-29 22:21:28 -0800 PST
+
+   镜像瘦身效果: 10.00%
+
+3. 容器运行状态:
+NAMES               IMAGE                  STATUS                    PORTS
+myapp-optimized     myapp:optimized-v2.0   Up 45 minutes (healthy)   0.0.0.0:8082->8080/tcp
+myapp-basic         myapp:basic-v1.0       Up 45 minutes             0.0.0.0:8081->8080/tcp
+
+4. 功能验证测试:
+   [ ] 端口映射测试 (8081): ✅ 通过
+   [ ] 端口映射测试 (8082): ✅ 通过
+   [ ] 环境变量测试: ✅ 通过
+   [ ] 健康检查测试: ✅ 通过
+   [ ] 卷挂载测试: ✅ 通过 (logs/, config/ 目录存在)
+   [ ] 安全特性测试: ✅ 通过 (使用非root用户: appuser)
+
+5. 实验要求完成情况总结:
+   ✅ 必须完成要求:
+      - 可复现: 提供完整的一键部署脚本
+      - 可验证: 包含详细的测试用例和验证方法  
+      - 可解释: README包含技术原理说明
+
+   ✅ 最低要求:
+      - Dockerfile编写: 基础版和优化版
+      - 端口映射演示: 8081:8080, 8082:8080
+      - 卷挂载演示: ./logs和./config目录
+      - 环境变量演示: APP_NAME, APP_VERSION
+      - 版本管理: 标签命名规则 (basic-v1.0, optimized-v2.0)
+
+   ✅ 加分点:
+      - 镜像瘦身: 多阶段构建，体积减少 ${REDUCTION}%
+      - 安全增强: 非root用户运行 (appuser)
+      - 健康检查: 自动监控容器健康状态
+      - 自动化脚本: Makefile统一管理
+
+6. 服务访问信息:
+   基础应用: http://localhost:8081/
+   优化应用: http://localhost:8082/
+   环境变量: http://localhost:8082/env
+   健康检查: http://localhost:8082/health
+
+7. 验证命令示例:
+   # 查看所有镜像
+   docker images myapp:*
+   
+   # 查看运行中的容器
+   docker ps
+   
+   # 测试服务功能
+   curl http://localhost:8081/
+   curl http://localhost:8082/health
+   
+   # 查看容器日志
+   docker logs myapp-basic
+   docker logs myapp-optimized
+
+================================================
+实验状态: 所有要求已成功完成！🎉
+================================================

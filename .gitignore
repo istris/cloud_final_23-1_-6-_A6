@@ -1,0 +1,25 @@
+# 日志文件
+logs/
+*.log
+
+# Python虚拟环境
+venv/
+env/
+.venv/
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+tmp/
+temp/
+
+# Docker相关
+.dockerignore
