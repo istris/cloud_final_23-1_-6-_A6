@@ -1,3 +1,0 @@
-NAMES               IMAGE                  STATUS                    PORTS
-myapp-optimized     myapp:optimized-v2.0   Up 45 minutes (healthy)   0.0.0.0:8082->8080/tcp
-myapp-basic         myapp:basic-v1.0       Up 45 minutes             0.0.0.0:8081->8080/tcp

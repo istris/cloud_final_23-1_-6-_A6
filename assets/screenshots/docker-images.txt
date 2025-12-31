@@ -1,3 +1,0 @@
-REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-myapp               optimized-v2.0      fd316f3d6ff7        About an hour ago   75.8MB
-myapp               basic-v1.0          f935fbd34b0c        About an hour ago   85.1MB

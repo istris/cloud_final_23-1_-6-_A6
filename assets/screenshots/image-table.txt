@@ -1,3 +1,0 @@
-REPOSITORY          TAG                 SIZE
-myapp               optimized-v2.0      75.8MB
-myapp               basic-v1.0          85.1MB
