@@ -60,3 +60,8 @@ curl http://localhost:8082/health # 测试优化容器健康检查
 
 # 5. 运行完整测试脚本
 ./verify-experiment.sh
+
+# 6. 如遇到问题可以运行测试文件看什么部分有问题
+cd cloud_final_23-1_-6-_A6      #如果已经在此文件夹可不输入
+cd tests/
+./tests.sh
