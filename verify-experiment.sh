@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "================================================"
-echo "    Docker镜像构建实验 - 最终验证报告"
+echo "    Docker镜像构建实验 - 运行脚本"
 echo "================================================"
 echo "验证时间: $(date)"
 echo ""
@@ -34,68 +34,68 @@ echo -e "\n4. 功能验证测试:"
 # 测试端口映射
 echo -n "   [ ] 端口映射测试 (8081): "
 if curl -s --connect-timeout 3 http://localhost:8081/ > /dev/null; then
-    echo "✅ 通过"
+    echo " 通过"
 else
-    echo "❌ 失败"
+    echo " 失败"
 fi
 
 echo -n "   [ ] 端口映射测试 (8082): "
 if curl -s --connect-timeout 3 http://localhost:8082/ > /dev/null; then
-    echo "✅ 通过"
+    echo " 通过"
 else
-    echo "❌ 失败"
+    echo " 失败"
 fi
 
 # 测试环境变量
 echo -n "   [ ] 环境变量测试: "
 if curl -s --connect-timeout 3 http://localhost:8082/env | grep -q "app_name"; then
-    echo "✅ 通过"
+    echo " 通过"
 else
-    echo "❌ 失败"
+    echo " 失败"
 fi
 
 # 测试健康检查
 echo -n "   [ ] 健康检查测试: "
 if curl -s --connect-timeout 3 http://localhost:8082/health | grep -q "healthy"; then
-    echo "✅ 通过"
+    echo " 通过"
 else
-    echo "❌ 失败"
+    echo " 失败"
 fi
 
 # 测试卷挂载
 echo -n "   [ ] 卷挂载测试: "
 if [ -d "logs" ] && [ -d "config" ]; then
-    echo "✅ 通过 (logs/, config/ 目录存在)"
+    echo " 通过 (logs/, config/ 目录存在)"
 else
-    echo "❌ 失败"
+    echo " 失败"
 fi
 
 # 测试安全特性
 echo -n "   [ ] 安全特性测试: "
 OPTIMIZED_USER=$(docker exec myapp-optimized whoami 2>/dev/null)
 if [ "$OPTIMIZED_USER" = "appuser" ]; then
-    echo "✅ 通过 (使用非root用户: $OPTIMIZED_USER)"
+    echo " 通过 (使用非root用户: $OPTIMIZED_USER)"
 else
-    echo "❌ 失败 (当前用户: $OPTIMIZED_USER)"
+    echo " 失败 (当前用户: $OPTIMIZED_USER)"
 fi
 
 # 5. 实验要求完成情况
 echo -e "\n5. 实验要求完成情况总结:"
 
 cat << 'SUMMARY'
-   ✅ 必须完成要求:
+    必须完成要求:
       - 可复现: 提供完整的一键部署脚本
       - 可验证: 包含详细的测试用例和验证方法  
       - 可解释: README包含技术原理说明
 
-   ✅ 最低要求:
+    最低要求:
       - Dockerfile编写: 基础版和优化版
       - 端口映射演示: 8081:8080, 8082:8080
       - 卷挂载演示: ./logs和./config目录
       - 环境变量演示: APP_NAME, APP_VERSION
       - 版本管理: 标签命名规则 (basic-v1.0, optimized-v2.0)
 
-   ✅ 加分点:
+    加分点:
       - 镜像瘦身: 多阶段构建，体积减少 ${REDUCTION}%
       - 安全增强: 非root用户运行 (appuser)
       - 健康检查: 自动监控容器健康状态
@@ -126,5 +126,5 @@ echo "   docker logs myapp-basic"
 echo "   docker logs myapp-optimized"
 
 echo -e "\n================================================"
-echo "实验状态: 所有要求已成功完成！🎉"
+echo "实验状态: 所有要求已成功完成！"
 echo "================================================"
