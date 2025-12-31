@@ -30,17 +30,42 @@
 
 ##  快速开始
 
-### 环境要求
-- Ubuntu 18.04+ / 20.04 LTS
-- Docker 18.09+
-- Docker Compose 1.25+
+# 备份原始README
+cp README.md README.md.backup
 
-### 安装Docker（如未安装）
+# 创建新的README.md
+cat > README.md << 'EOF'
+# Docker镜像构建实验项目
+
+## 🚀 快速开始（5分钟复现）
+
+### 环境要求
+- **操作系统**：Ubuntu 18.04+ 或任何支持Docker的系统
+- **必需软件**：Git、Docker、Make、curl
+- **硬件**：2GB+ 内存，10GB+ 磁盘空间
+
+### 一键运行步骤
 ```bash
-# Ubuntu系统安装Docker
-sudo apt update
-sudo apt install -y docker.io
+# 1. 克隆项目
+git clone https://github.com/istris/cloud_final_23-1_-6-_A6.git
+cd cloud_final_23-1_-6-_A6
+
+# 2. 安装Docker（如未安装）
+sudo apt update && sudo apt install -y docker.io
 sudo systemctl start docker
-sudo systemctl enable docker
 sudo usermod -aG docker $USER
 newgrp docker
+
+# 3. 一键构建和运行
+make build-all        # 构建基础镜像和优化镜像
+make compose-up       # 启动所有容器服务
+# 或如果compose有问题，用：
+make run-basic && make run-optimized
+
+# 4. 等待10秒后验证
+sleep 10
+curl http://localhost:8081/      # 测试基础容器
+curl http://localhost:8082/health # 测试优化容器健康检查
+
+# 5. 运行完整测试脚本
+./verify-experiment.sh
